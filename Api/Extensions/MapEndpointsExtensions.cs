@@ -33,9 +33,9 @@ public static class MapEndpointsExtensions
         return app;
     }
     
-    public static void MapGet(this IEndpointRouteBuilder builder, Delegate handler)
+    public static RouteHandlerBuilder MapGet(this IEndpointRouteBuilder builder, Delegate handler)
     {
-        builder.MapGet(handler.Method.Name, handler);
+        return builder.MapGet(handler.Method.Name, handler);
     }
 
     public static RouteHandlerBuilder MapPost(this IEndpointRouteBuilder builder, Delegate handler)
