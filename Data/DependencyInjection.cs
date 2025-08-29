@@ -1,4 +1,6 @@
 using Data.Db;
+using Data.Db.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,11 +13,12 @@ public static class DependencyInjection
         if (connectionString is null) 
             throw new ArgumentNullException(nameof(connectionString), "Connection string 'IdentityDb' not found");
 
-        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+        services.AddDbContext<ApplicationDbContext>((_, options) =>
         {
             options.UseSqlServer(connectionString);
         });
 
         services.AddScoped<ApplicationDbContextInitialiser>();
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
     }
 }
